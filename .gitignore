@@ -1,0 +1,21 @@
+# Python
+venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.pkl
+
+# Environment — NEVER upload secrets!
+.env
+
+# Node
+node_modules/
+dashboard/build/
+
+# Logs
+logs/
+
+# Docker
+*.log
