@@ -40,8 +40,8 @@ StreamSentinel is a **production-grade autonomous data pipeline system** that mo
 ---
 
 ## 🏗️ System Architecture
+[Architecture]
 
-![Architecture](https://mermaid.ink/img/pako:eNp1kk9PwzAMxb9KlBOI9QN0QgKJA0hIHDhFqpq4a6TGqRIHNqbvTtJ2jG3kkvj3Yt_zS04qOkJViRS2CD4quEZ4hZfVZQ2XeICn1UNWQnNj0sJ-QZhsgzBHuIX9APMRphmgIXKGdwj3kF8Q9gjXCDeIWwj3iHeIe4R7xAfEA8ID4hPiE-IL4gviG-Ib4hfia-If4gfiB-IH4gfiBuIb4hvjG-Mb4xvjG-Mb4xvjG-Mb4xvjG-MbwxvDG-MbwxvDG8MbwxvDG8MbwxvDG-Mb4xvjG-Mb4xvjG-Mb4xvjG-Mb4xvjG-Mb4xvjG8Mbww?type=png)
 Data Simulator
 ↓
 Apache Kafka (Message Pipeline)
