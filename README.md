@@ -15,7 +15,14 @@
 StreamSentinel is a **production-grade autonomous data pipeline system** that monitors high-throughput event streams in real-time using Machine Learning — detecting anomalies, auto-fixing them, and generating plain-English incident reports **without any human intervention.**
 
 > 💡 Traditional pipelines break → engineer wakes up at 3AM → manually fixes in 60 minutes
+>
 > 💡 StreamSentinel breaks → detects in 10 seconds → auto-fixes in 30 seconds → sends report → engineer sleeps 😴
+
+---
+
+## 📊 Live Dashboard
+
+![StreamSentinel Dashboard](dashboard_screenshot.png)
 
 ---
 
@@ -33,52 +40,32 @@ StreamSentinel is a **production-grade autonomous data pipeline system** that mo
 ---
 
 ## 🏗️ System Architecture
-┌─────────────────────────────────────────────────────────┐
-│                    StreamSentinel                       │
-│                                                         │
-│  ┌──────────────┐     ┌─────────────┐                   │
-│  │ Data         │     │   Apache    │                   │
-│  │ Simulator    │───▶│   Kafka     │                   │
-│  │ (10K events/s)│   │  Pipeline   │                    │
-│  └──────────────┘    └──────┬──────┘                    │
-│                             │                           │
-│                    ┌────────▼────────┐                  │
-│                    │ Anomaly Detector │                 │
-│                    │ Isolation Forest │                 │
-│                    │ (4 anomaly types)│                 │
-│                    └────────┬────────┘                  │
-│                             │                           │
-│              ┌──────────────▼──────────────┐            │
-│              │      Auto-Remediation        │           │
-│              │   Fixes in under 30 seconds  │           │
-│              └──────────────┬──────────────┘            │
-│                             │                           │
-│         ┌───────────────────▼──────────────────┐        │
-│         │           LLM Explainer              │        │
-│         │   Plain-English Incident Reports     │        │
-│         └───────────────────┬──────────────────┘        │
-│                             │                           │
-│              ┌──────────────▼──────────────┐            │
-│              │      FastAPI Backend        │            │
-│              │   REST + WebSocket          │            │
-│              └──────────────┬──────────────┘            │
-│                             │                           │
-│              ┌──────────────▼──────────────┐            │
-│              │    React.js Dashboard       │            │
-│              │  Live charts + Incidents    │            │
-│              └─────────────────────────────┘            │
-└─────────────────────────────────────────────────────────┘
+
+![Architecture](https://mermaid.ink/img/pako:eNp1kk9PwzAMxb9KlBOI9QN0QgKJA0hIHDhFqpq4a6TGqRIHNqbvTtJ2jG3kkvj3Yt_zS04qOkJViRS2CD4quEZ4hZfVZQ2XeICn1UNWQnNj0sJ-QZhsgzBHuIX9APMRphmgIXKGdwj3kF8Q9gjXCDeIWwj3iHeIe4R7xAfEA8ID4hPiE-IL4gviG-Ib4hfia-If4gfiB-IH4gfiBuIb4hvjG-Mb4xvjG-Mb4xvjG-Mb4xvjG-MbwxvDG-MbwxvDG8MbwxvDG8MbwxvDG-Mb4xvjG-Mb4xvjG-Mb4xvjG-Mb4xvjG-Mb4xvjG8Mbww?type=png)
+Data Simulator
+↓
+Apache Kafka (Message Pipeline)
+↓
+Anomaly Detector (Isolation Forest ML)
+↓
+Auto-Remediation Engine (30 sec fix)
+↓
+LLM Explainer (Groq + LLaMA 3.3)
+↓
+FastAPI Backend (REST + WebSocket)
+↓
+React.js Live Dashboard
 
 ---
 
-## 🔍 Anomaly Types Detected
+## 🔍 Anomaly Types Detected & Fixed
 
-| Type | Description | Auto-Fix Applied |
+| Type | What it means | Auto-Fix Applied |
 |---|---|---|
-| `suspicious_amount` | Payment amount 500x higher than normal | Cap to maximum allowed |
-| `missing_fields` | Required fields absent from order | Fill with safe defaults |
-| `invalid_timestamp` | Broken or unparseable date format | Replace with current time |
-| `unusual_pattern` | Statistical outlier from ML model | Quarantine for review |
+| `suspicious_amount` | Payment 500x higher than normal | Cap to maximum allowed ₹2000 |
+| `missing_fields` | Required fields absent | Fill with safe defaults |
+| `invalid_timestamp` | Broken date format | Replace with current time |
+| `unusual_pattern` | ML statistical outlier | Quarantine for review |
 
 ---
 
@@ -88,32 +75,24 @@ StreamSentinel is a **production-grade autonomous data pipeline system** that mo
 |---|---|---|
 | **Streaming** | Apache Kafka | High-throughput event pipeline |
 | **ML Model** | Scikit-learn, Isolation Forest | Anomaly detection |
-| **Deep Learning** | PyTorch, LSTM | Failure prediction |
-| **Experiment Tracking** | MLflow | Model versioning |
-| **Backend** | FastAPI, Python | REST API + WebSocket |
+| **Backend** | FastAPI, Python 3.13 | REST API + WebSocket |
 | **Frontend** | React.js, Recharts | Live dashboard |
 | **Database** | PostgreSQL | Incident storage |
 | **Cache** | Redis | Live metrics |
 | **LLM** | Groq API, LLaMA 3.3 | Incident report generation |
 | **DevOps** | Docker, Docker Compose | Containerization |
-| **Language** | Python 3.13 | Core backend |
 
 ---
 
-## 📊 Live Dashboard Preview
-🚨 StreamSentinel    
-   ● HEALTHY Autonomous Self-Healing Data Pipeline
-┌──────────┐ ┌──────────┐ ┌──────────┐ ┌──────────┐
-│ 📦 536   │ │ 🚨 5     │ │ 🔧 5     │ │ 💚 95%   │
-│  Orders  │ │ Anomalies│ │  Fixed   │ │  Health  │
-└──────────┘ └──────────┘ └──────────┘ └──────────┘
-📈 LIVE ORDER FLOW          🥧 ORDER BREAKDOWN
-[beautiful curve chart]     [donut chart]
-📋 RECENT INCIDENTS
-Time        Order ID    Reason              Status
-12:16 pm    f19e9bde    invalid_timestamp   ✅ Auto-Fixed
-12:12 pm    6044084b    invalid_timestamp   ✅ Auto-Fixed
-12:07 pm    e3efd6d7    invalid_timestamp   ✅ Auto-Fixed
+## 📈 Performance Metrics
+
+| Metric | Value |
+|---|---|
+| ⚡ Detection Speed | Under 10 seconds |
+| 🔧 Recovery Time | Under 30 seconds (vs 60 min manual) |
+| 📦 Throughput | 1 order/second continuous |
+| 🎯 Detection Accuracy | 95%+ |
+| 👤 Human Intervention | Zero |
 
 ---
 
@@ -123,7 +102,6 @@ Time        Order ID    Reason              Status
 - Python 3.13+
 - Docker Desktop
 - Node.js 18+
-- Git
 
 ### Installation
 
@@ -134,88 +112,52 @@ cd Streamsentinel
 
 # Create virtual environment
 python -m venv venv
-venv\Scripts\Activate.ps1  # Windows
-source venv/bin/activate    # Mac/Linux
+venv\Scripts\Activate.ps1
 
-# Install Python dependencies
+# Install dependencies
 pip install -r requirements.txt
 
-# Set up environment variables
-cp .env.example .env
-# Add your GROQ_API_KEY to .env
+# Train ML model
+python anomaly_detector/train_model.py
 ```
 
-### Running the Project
+### Running
 
 ```bash
-# Step 1: Start infrastructure (Kafka, PostgreSQL, Redis)
+# Start infrastructure
 docker-compose up -d
 
-# Step 2: Train the ML model
-python anomaly_detector/train_model.py
-
-# Step 3: Start data simulator (Terminal 1)
+# Terminal 1 - Simulator
 python data_simulator/simulator.py
 
-# Step 4: Start anomaly detector (Terminal 2)
+# Terminal 2 - Detector
 python anomaly_detector/detector.py
 
-# Step 5: Start API (Terminal 3)
+# Terminal 3 - API
 python -m uvicorn api.main:app --reload --port 8000
 
-# Step 6: Start dashboard (Terminal 4)
-cd dashboard && npm install && npm start
+# Terminal 4 - Dashboard
+cd dashboard && npm start
 ```
 
-### Access the System
-Dashboard  → http://localhost:3000
-API        → http://localhost:8000
-API Docs   → http://localhost:8000/docs
+### Access
+Dashboard → http://localhost:3000
+API Docs  → http://localhost:8000/docs
 
 ---
 
 ## 📁 Project Structure
 streamsentinel/
-│
-├── 📁 data_simulator/          # Generates realistic order events
-│   └── simulator.py
-│
-├── 📁 kafka_setup/             # Kafka producer & consumer
-│   ├── producer.py
-│   └── consumer.py
-│
-├── 📁 anomaly_detector/        # ML brain
-│   ├── detector.py             # Real-time detection engine
-│   ├── train_model.py          # Model training script
-│   └── models/                 # Saved ML models
-│
-├── 📁 auto_remediation/        # Auto-fix engine
-│   └── fixer.py                # 4 fix strategies
-│
-├── 📁 explainer/               # LLM report generator
-│   └── reporter.py             # Groq API integration
-│
-├── 📁 api/                     # FastAPI backend
-│   └── main.py                 # 7 REST endpoints + WebSocket
-│
-├── 📁 dashboard/               # React.js frontend
-│   └── src/
-│       └── App.js              # Live monitoring dashboard
-│
-├── 📁 tests/                   # Test suite
-├── 🐳 docker-compose.yml       # Infrastructure setup
-├── 📋 requirements.txt         # Python dependencies
-└── 📖 README.md
-
----
-
-## 📈 Performance Metrics
-⚡ Detection Speed     → Under 10 seconds
-🔧 Recovery Time       → Under 30 seconds (vs 60 minutes manual)
-📦 Throughput          → 1 order/second continuous
-🎯 Detection Accuracy  → 95%+
-🔄 Uptime              → Zero-downtime self-healing
-👤 Human Intervention  → Zero
+├── data_simulator/       # Generates realistic order events
+├── kafka_setup/          # Kafka producer & consumer
+├── anomaly_detector/     # ML brain (Isolation Forest)
+├── auto_remediation/     # Auto-fix engine (4 strategies)
+├── explainer/            # LLM incident report generator
+├── api/                  # FastAPI backend (7 endpoints)
+├── dashboard/            # React.js live dashboard
+├── tests/                # Test suite
+├── docker-compose.yml    # Infrastructure setup
+└── requirements.txt      # Python dependencies
 
 ---
 
@@ -225,39 +167,27 @@ streamsentinel/
 |---|---|---|
 | GET | `/` | Health check |
 | GET | `/stats` | Live pipeline statistics |
-| GET | `/health` | Pipeline health score (0-100) |
-| GET | `/incidents` | Recent incident history |
-| POST | `/report-anomaly` | Report detected anomaly |
-| POST | `/report-order` | Report processed order |
+| GET | `/health` | Health score (0-100) |
+| GET | `/incidents` | Incident history |
+| POST | `/report-anomaly` | Log detected anomaly |
+| POST | `/report-order` | Log processed order |
 | WS | `/ws` | WebSocket live feed |
-
----
-
-## 🎓 What I Learned
-
-- Designing **production-grade streaming architectures** with Apache Kafka
-- Building **ML-powered anomaly detection** systems using Isolation Forest
-- Implementing **auto-remediation patterns** for self-healing systems
-- Integrating **LLM APIs** for intelligent incident reporting
-- Building **real-time dashboards** with React.js and WebSockets
-- **Containerizing** multi-service applications with Docker
 
 ---
 
 ## 👩‍💻 Author
 
-**Nishanthini BS **
+**Nishanthini BS**
 B.Tech Computer Science & Engineering | FinTech Honors
 SRM Institute of Science and Technology
 
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/in/nishanthini)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/nishanthini-bs)
 [![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/nishanthini23bs)
 
 ---
 
 ## 📄 License
 
-MIT License — feel free to use this project for learning and reference!
+MIT License — feel free to use this project for learning!
 
 ---
-
