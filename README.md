@@ -43,10 +43,13 @@ StreamSentinel is a **production-grade autonomous data pipeline system** that mo
 [Architecture]
 
 Data Simulator
+
 ↓
 Apache Kafka (Message Pipeline)
+
 ↓
 Anomaly Detector (Isolation Forest ML)
+
 ↓
 Auto-Remediation Engine (30 sec fix)
 ↓
